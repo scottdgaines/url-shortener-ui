@@ -1,53 +1,60 @@
-import React, { Component } from 'react';
+import { getDefaultNormalizer } from '@testing-library/react';
+import React, { useState } from 'react';
 
-class UrlForm extends Component {
-  constructor(props) {
-    super();
-    this.props = props;
-    this.state = {
-      title: '',
-      urlToShorten: ''
-    };
-  }
+const UrlForm = ({ fetchData }) => {
+  const [title, setTitle] = useState('')
+  const [urlToShorten, setUrlToShorten] = useState('')
 
-  handleNameChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.clearInputs();
+
+    const newUrl = {
+      long_url: urlToShorten,
+      title: title
+    }
+
+    postData(newUrl)
+    clearInputs();
   }
 
-  clearInputs = () => {
-    this.setState({title: '', urlToShorten: ''});
+  const postData = async (newUrl) => {
+    const response = await fetch('http://localhost:3001/api/v1/urls', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUrl)
+    })
+    
+    fetchData()
   }
 
-  render() {
-    return (
-      <form>
-        <input
-          type='text'
-          placeholder='Title...'
-          name='title'
-          value={this.state.title}
-          onChange={e => this.handleNameChange(e)}
-        />
-
-        <input
-          type='text'
-          placeholder='URL to Shorten...'
-          name='title'
-          value={this.state.title}
-          onChange={e => this.handleNameChange(e)}
-        />
-
-        <button onClick={e => this.handleSubmit(e)}>
-          Shorten Please!
-        </button>
-      </form>
-    )
+  const clearInputs = () => {
+    setTitle('')
+    setUrlToShorten('')
   }
+
+  return (
+    <form>
+      <input
+        type='text'
+        placeholder='Title...'
+        name='title'
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
+
+      <input
+        type='text'
+        placeholder='URL to Shorten...'
+        name='URL to Shorten'
+        value={urlToShorten}
+        onChange={e => setUrlToShorten(e.target.value)}
+      />
+
+      <button onClick={e => handleSubmit(e)}>
+        Shorten Please!
+      </button>
+    </form>
+  )
 }
 
 export default UrlForm;
