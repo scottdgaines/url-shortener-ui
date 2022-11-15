@@ -5,14 +5,7 @@ import { getUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
-const App = (props) => {
-// export class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       urls: []
-//     }
-//   }
+const App = () => {
 const [urls, setUrls] = useState([])
 
 const fetchData = async () => {
@@ -29,9 +22,8 @@ useEffect(() => {
     <main className="App">
       <header>
         <h1>URL Shortener</h1>
-        <UrlForm fetchData={fetchData} />
+        <UrlForm fetchData={fetchData} setUrls={setUrls} urls={urls} />
       </header>
-
       <UrlContainer urls={urls}/>
     </main>
   );

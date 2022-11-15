@@ -2,7 +2,6 @@ import React from 'react';
 import './UrlContainer.css';
 
 const UrlContainer = ({ urls }) => {
-  console.log('prop', urls)
   const urlEls = urls.map(url => {
     return (
       <div 

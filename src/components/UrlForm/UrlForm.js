@@ -1,4 +1,3 @@
-import { getDefaultNormalizer } from '@testing-library/react';
 import React, { useState } from 'react';
 
 const UrlForm = ({ fetchData }) => {
@@ -18,12 +17,12 @@ const UrlForm = ({ fetchData }) => {
   }
 
   const postData = async (newUrl) => {
-    const response = await fetch('http://localhost:3001/api/v1/urls', {
+    await fetch('http://localhost:3001/api/v1/urls', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUrl)
     })
-    
+
     fetchData()
   }
 

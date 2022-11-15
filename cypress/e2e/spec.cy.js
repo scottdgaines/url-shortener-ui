@@ -1,11 +1,6 @@
 describe('dashboard', () => {
   beforeEach(() => {
     cy.intercept( {method: 'GET', url: 'http://localhost:3001/api/v1/urls'}, { fixture: 'get_stub.json' })
-    cy.intercept({method: 'POST', url: 'http://localhost:3001/api/v1/urls'}, { 
-      // long_url: 'https://example.com/',
-      // title: 'Test Case 2'
-      fixture: 'post_stub.json'
-     })
     cy.visit('http://localhost:3000/')
   })
 
@@ -29,9 +24,13 @@ describe('dashboard', () => {
   })
 
   it('Should render a newly submitted URL', () => {
+    cy.intercept({method: 'POST', url: 'http://localhost:3001/api/v1/urls'}, { 
+      long_url: "https://example.com/",
+      title: 'Test Case 2'
+     })
+    cy.intercept( {method: 'GET', url: 'http://localhost:3001/api/v1/urls'}, { fixture: 'get_stub2.json' })
     cy.get('[placeholder="Title..."]').type('Test Title')
     cy.get('[placeholder="URL to Shorten..."]').type('Test URL')
     cy.get('button').click()
   })
 })
-
