@@ -1,6 +1,11 @@
 describe('dashboard', () => {
   beforeEach(() => {
     cy.intercept( {method: 'GET', url: 'http://localhost:3001/api/v1/urls'}, { fixture: 'get_stub.json' })
+    cy.intercept({method: 'POST', url: 'http://localhost:3001/api/v1/urls'}, { 
+      // long_url: 'https://example.com/',
+      // title: 'Test Case 2'
+      fixture: 'post_stub.json'
+     })
     cy.visit('http://localhost:3000/')
   })
 
@@ -22,6 +27,11 @@ describe('dashboard', () => {
     cy.get('[placeholder="Title..."]').type('Test Title').invoke('val').should('equal', 'Test Title')
     cy.get('[placeholder="URL to Shorten..."]').type('Test URL').invoke('val').should('equal', 'Test URL')
   })
+
+  it('Should render a newly submitted URL', () => {
+    cy.get('[placeholder="Title..."]').type('Test Title')
+    cy.get('[placeholder="URL to Shorten..."]').type('Test URL')
+    cy.get('button').click()
+  })
 })
 
-// .invoke('val').should('equal', '11/11');
