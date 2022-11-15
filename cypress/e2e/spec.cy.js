@@ -32,5 +32,8 @@ describe('dashboard', () => {
     cy.get('[placeholder="Title..."]').type('Test Title')
     cy.get('[placeholder="URL to Shorten..."]').type('Test URL')
     cy.get('button').click()
+    cy.get('section > :nth-child(2)').should('be.visible')
+    cy.get(':nth-child(2) > h3').should('be.visible').should('contain', 'Test Case 2')
+    cy.get(':nth-child(2) > a').should('be.visible').should('contain', 'http://localhost:3001/useshorturl/2')
   })
 })

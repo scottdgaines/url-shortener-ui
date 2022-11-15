@@ -22,7 +22,6 @@ const UrlForm = ({ fetchData }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUrl)
     })
-
     fetchData()
   }
 
