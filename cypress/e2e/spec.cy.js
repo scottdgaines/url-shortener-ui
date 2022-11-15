@@ -12,5 +12,16 @@ describe('dashboard', () => {
     cy.get('p').should('contain', 'https://example.com/')
   })
 
-  it('Should displ')
+  it('Should display the form and its two inpurts', () => {
+    cy.get('[placeholder="Title..."]').should('be.visible')
+    cy.get('[placeholder="URL to Shorten..."]').should('be.visible')
+    cy.get('button').should('be.visible').should('contain', 'Shorten Please!')
+  })
+
+  it('Should show a user\'s input values', () => {
+    cy.get('[placeholder="Title..."]').type('Test Title').invoke('val').should('equal', 'Test Title')
+    cy.get('[placeholder="URL to Shorten..."]').type('Test URL').invoke('val').should('equal', 'Test URL')
+  })
 })
+
+// .invoke('val').should('equal', '11/11');
